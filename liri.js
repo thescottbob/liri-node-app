@@ -11,7 +11,7 @@ require("dotenv").config();
 var request = require("request");
 
 // If the user enters the movie-this command without specifying a movie name, they will get data for 'Mr. Nobody'
-request("http://www.omdbapi.com/?apikey=trilogy&t=Mr.+Nobody", function(error, response, body) {
+request("http://www.omdbapi.com/?apikey=trilogy&plot=short&t=Mr.+Nobody", function(error, response, body) {
 
   // If the request is successful (i.e. if the response status code is 200)
   if (!error && response.statusCode === 200) {
@@ -20,7 +20,7 @@ request("http://www.omdbapi.com/?apikey=trilogy&t=Mr.+Nobody", function(error, r
     console.log("Title: " + JSON.parse(body).Title);
     console.log("Release Year: " + JSON.parse(body).Year);
     console.log("IMDb Rating: " + JSON.parse(body).imdbRating);
-    console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Value);
+    console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
     console.log("Country Produced In: " + JSON.parse(body).Country);
     console.log("Language: " + JSON.parse(body).Language);
     console.log("Plot: " + JSON.parse(body).Plot);
@@ -31,22 +31,19 @@ request("http://www.omdbapi.com/?apikey=trilogy&t=Mr.+Nobody", function(error, r
   }
 });
 
-var keys = function keys( object ) {
+// If the user enters the movie-this command and specifies a movie name, they will get data for the moview they entered
 
-  return Object.keys( object );
-
-};
 
 // If the user enters the spotify-this-song command without specifying a song, they will get data for 'The Sign' by Ace of Base
 
-var Spotify = require('node-spotify-api');
+// var Spotify = require('node-spotify-api');
 
-var spotify = new Spotify(keys.spotify);
+// var spotify = new Spotify(keys.spotify);
   
-  spotify.search({ type: 'track', query: 'The Sign' }, function(err, data) {
-    if (err) {
-      return console.log('Error occurred: ' + err);
-    }
+//   spotify.search({ type: 'track', query: 'The Sign' }, function(err, data) {
+//     if (err) {
+//       return console.log('Error occurred: ' + err);
+//     }
   
-  console.log(data); 
-  });
+//   console.log(data); 
+//   });
