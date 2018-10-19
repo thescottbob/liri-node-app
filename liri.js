@@ -10,6 +10,8 @@ require("dotenv").config();
 // Include the request npm package
 var request = require("request");
 
+//The below if/else statement controls for two use cases: 
+//1) The user enters node liri.js movie-this and does not specify any movie, OR 2) The user enters node liri.js movie-this <movie name here>
 if(process.argv.length === 3){
 
   // If the user enters the movie-this command without specifying a movie name, they will get data for 'Mr. Nobody'
