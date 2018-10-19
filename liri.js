@@ -1,4 +1,4 @@
-// Make it so liri.js can take in all of the following commandss:
+// The purpose of this file is to allow the user to enter any of the below commands via the command line and receive relevant results
 
 // node liri.js concert-this <artist/band name here>
 // node liri.js spotify-this-song '<song name here>'
@@ -32,7 +32,7 @@ if(process.argv.length === 3){
         }
     });
   } 
-  else if(process.argv.length === 4){
+  else if(process.argv.length >= 4){
 
   var userInput= process.argv[3];
 
