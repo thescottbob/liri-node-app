@@ -34,7 +34,9 @@ if(process.argv.length === 3){
   } 
   else if(process.argv.length >= 4){
 
-  var userInput= process.argv[3];
+  //The below variable includes so many 'process.argv's' because each one represents one word in the movie title the user is searching for
+  //In other words the code will check the first *5* words in the movie title the user searches for to find the closest match on OMDb
+  var userInput= process.argv[3] + "+" + process.argv[4] + "+" + process.argv[5] + "+" + process.argv[6] + "+" + process.argv[7];
 
   // If the user enters the movie-this command and specifies a movie name, they will get data for the movie they entered
   request(`http://www.omdbapi.com/?apikey=trilogy&plot=short&t=${userInput}`, function(error, response, body) {
