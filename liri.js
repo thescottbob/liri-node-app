@@ -10,28 +10,49 @@ require("dotenv").config();
 // Include the request npm package
 var request = require("request");
 
-// If the user enters the movie-this command without specifying a movie name, they will get data for 'Mr. Nobody'
-request("http://www.omdbapi.com/?apikey=trilogy&plot=short&t=Mr.+Nobody", function(error, response, body) {
+if(process.argv.length === 3){
 
-  // If the request is successful (i.e. if the response status code is 200)
-  if (!error && response.statusCode === 200) {
+  // If the user enters the movie-this command without specifying a movie name, they will get data for 'Mr. Nobody'
+  request("http://www.omdbapi.com/?apikey=trilogy&plot=short&t=Mr.+Nobody", function(error, response, body) {
+      if (!error && response.statusCode === 200) {
+        // Parse the body of the site and recover the following info
+        console.log("Title: " + JSON.parse(body).Title);
+        console.log("Release Year: " + JSON.parse(body).Year);
+        console.log("IMDb Rating: " + JSON.parse(body).imdbRating);
+        console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
+        console.log("Country Produced In: " + JSON.parse(body).Country);
+        console.log("Language: " + JSON.parse(body).Language);
+        console.log("Plot: " + JSON.parse(body).Plot);
+        console.log("Actors: " + JSON.parse(body).Actors);
+      }
+      else {
+        console.log(error);
+        }
+    });
+  } 
+  else if(process.argv.length === 4){
 
-    // Parse the body of the site and recover the following info
-    console.log("Title: " + JSON.parse(body).Title);
-    console.log("Release Year: " + JSON.parse(body).Year);
-    console.log("IMDb Rating: " + JSON.parse(body).imdbRating);
-    console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
-    console.log("Country Produced In: " + JSON.parse(body).Country);
-    console.log("Language: " + JSON.parse(body).Language);
-    console.log("Plot: " + JSON.parse(body).Plot);
-    console.log("Actors: " + JSON.parse(body).Actors);
+  var userInput= process.argv[3];
+
+  // If the user enters the movie-this command and specifies a movie name, they will get data for the movie they entered
+  request(`http://www.omdbapi.com/?apikey=trilogy&plot=short&t=${userInput}`, function(error, response, body) {
+      if (!error && response.statusCode === 200) {
+        // Parse the body of the site and recover the following info
+        console.log("Title: " + JSON.parse(body).Title);
+        console.log("Release Year: " + JSON.parse(body).Year);
+        console.log("IMDb Rating: " + JSON.parse(body).imdbRating);
+        console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
+        console.log("Country Produced In: " + JSON.parse(body).Country);
+        console.log("Language: " + JSON.parse(body).Language);
+        console.log("Plot: " + JSON.parse(body).Plot);
+        console.log("Actors: " + JSON.parse(body).Actors);
+      }
+      else {
+        console.log(error);
+      }
+    });
   }
-  else {
-    console.log(error);
-  }
-});
 
-// If the user enters the movie-this command and specifies a movie name, they will get data for the moview they entered
 
 
 // If the user enters the spotify-this-song command without specifying a song, they will get data for 'The Sign' by Ace of Base
