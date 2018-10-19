@@ -12,10 +12,10 @@ var request = require("request");
 
 //The below if/else statement controls for two use cases: 
 //1) The user enters node liri.js movie-this and does not specify any movie, OR 2) The user enters node liri.js movie-this <movie name here>
-if(process.argv.length === 3){
+if(process.argv.length === 3 && process.argv[2] === "movie-this"){
 
   // If the user enters the movie-this command without specifying a movie name, they will get data for 'Mr. Nobody'
-  request("http://www.omdbapi.com/?apikey=trilogy&plot=short&t=${something}Mr.+Nobody", function(error, response, body) {
+  request("http://www.omdbapi.com/?apikey=trilogy&plot=short&t=Mr.+Nobody", function(error, response, body) {
       if (!error && response.statusCode === 200) {
         // Parse the body of the site and recover the following info
         console.log("Title: " + JSON.parse(body).Title);
