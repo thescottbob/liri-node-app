@@ -10,9 +10,10 @@ require("dotenv").config();
 // Include the request npm package
 var request = require("request");
 
-//The below if/else statement controls for two use cases: 
-//1) The user enters node liri.js movie-this and does not specify any movie, OR 2) The user enters node liri.js movie-this <movie name here>
-if(process.argv.length === 3 && process.argv[2] === "movie-this"){
+//The below if/else statement controls for two use cases while hitting the OMDb API: 
+// 1) The user enters node liri.js movie-this and does not specify any movie, OR 
+// 2) The user enters node liri.js movie-this <movie name here>
+if(process.argv.lenth === 3 && process.argv[2] === "movie-this"){
 
   // If the user enters the movie-this command without specifying a movie name, they will get data for 'Mr. Nobody'
   request("http://www.omdbapi.com/?apikey=trilogy&plot=short&t=Mr.+Nobody", function(error, response, body) {
@@ -32,7 +33,7 @@ if(process.argv.length === 3 && process.argv[2] === "movie-this"){
         }
     });
   } 
-  else if(process.argv.length >= 4){
+  else if(process.argv[2] === "movie-this" && process.argv.length >= 4){
 
   //The below variable includes five 'process.argv's' because each one represents one word in the movie title the user is searching for
   //In other words, the code will check the first *5* words in the movie title the user searches for to find the closest match on OMDb
@@ -57,18 +58,39 @@ if(process.argv.length === 3 && process.argv[2] === "movie-this"){
     });
   }
 
+  //The below if/else statement controls what happens when the user enters node liri.js concert-this <artist/band name here>
+if(process.argv[2] === "concert-this"){
 
+  var artist_or_band = process.argv.splice(3).join(" ");
 
-// If the user enters the spotify-this-song command without specifying a song, they will get data for 'The Sign' by Ace of Base
+  request(`https://rest.bandsintown.com/artists/${artist_or_band}/events?app_id=3130198cea598ac71a66d6a789681ef8`, function(error, response, body) {
+      if (!error && response.statusCode === 200) {
 
-// var Spotify = require('node-spotify-api');
+        var result = JSON.parse(body);
+        // Parse the body of the site and recover the following info
+        console.log("Venue Name: " + result.VenueData.name);
+        console.log("Venue Location: " + result.EventData.venue + ", " + results.VenueData.city 
+        + ", " + result.VenueData.region + ", " + result.VenueData.country);
+        console.log("Event Date: " + result.EventData.datetime);
+      }
+      else {
+        console.log(error);
+        }
+    });
+  } 
 
-// var spotify = new Spotify(keys.spotify);
-  
-//   spotify.search({ type: 'track', query: 'The Sign' }, function(err, data) {
-//     if (err) {
-//       return console.log('Error occurred: ' + err);
-//     }
-  
-//   console.log(data); 
-//   });
+  // var Spotify = require('node-spotify-api');
+ 
+  // var spotify = new Spotify({
+  //   id: <exports.spotify.id>,
+  //   secret: <exports.spotify.secret>
+  // });
+   
+  // spotify
+  //   .request('https://api.spotify.com/v1/tracks/7yCPwWs66K8Ba5lFuU2bcx')
+  //   .then(function(data) {
+  //     console.log(data); 
+  //   })
+  //   .catch(function(err) {
+  //     console.error('Error occurred: ' + err); 
+  //   });
